@@ -33,7 +33,7 @@ const AuthForm = () => {
 
   return (
     <Motion.div
-      className="border border-emerald-500 bg-black/80 backdrop-blur-md p-8 rounded-2xl shadow-2xl w-full max-w-md relative"
+      className="border border-emerald-500 bg-black/50 p-8 rounded-2xl shadow-2xl w-full max-w-md relative"
       style={{
         backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='40' height='40' viewBox='0 0 40 40'%3E%3Cg fill='%23FFD700' fill-opacity='0.1'%3E%3Cpath d='M0 0h40v40H0z'/%3E%3Cpath d='M20 20l10-10M20 20L10 10M20 20l10 10M20 20L10 30'/%3E%3C/g%3E%3C/svg%3E")`,
       }}
@@ -42,13 +42,15 @@ const AuthForm = () => {
       transition={{ duration: 0.5 }}
     >
       <Motion.h2
-        className="text-3xl font-bold text-emerald-300 mb-6 text-center font-ubuntu"
+        className="text-3xl uppercase font-bold text-emerald-300 mb-6 text-center font-ubuntu"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
       >
         Login 
       </Motion.h2>
+    
+      
       <form onSubmit={handleSubmit} className="space-y-6">
         <div>
           <label

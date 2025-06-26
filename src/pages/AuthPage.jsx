@@ -5,7 +5,7 @@ import Particles from 'react-tsparticles';
 import { loadFull } from 'tsparticles';
 import AuthForm from '@components/AuthForm';
 import sunset from '@assets/images/spirit-animals/king.webp';
-import sankofa from '@assets/images/icons/sankofa.webp'; // New adinkra symbol
+import sankofa from '@assets/icons/sankofa.webp'; // New adinkra symbol
 
 // Recommendation: Add to index.html for preloading
 // <link rel="preload" href="/src/assets/images/spirit-animals/king.webp" as="image" />
@@ -19,7 +19,7 @@ const AuthPage = () => {
 
   return (
     <div
-      className="min-h-screen flex flex-col md:flex-row items-center justify-between bg-cover bg-center relative px-4 md:px-8 lg:px-16"
+      className="min-h-screen flex flex-col md:flex-row items-center justify-between bg-cover bg-center relative px-4 md:px-8 lg:px-40"
       style={{ backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(${sunset})` }}
     >
       {/* Particle Background */}
@@ -65,19 +65,20 @@ const AuthPage = () => {
         />
         <div>
           <Motion.h1
-            className="text-4xl md:text-5xl font-bold text-white drop-shadow-lg font-ubuntu"
+            className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg font-ubuntu"
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ repeat: Infinity, duration: 2 }}
           >
             JungleX
           </Motion.h1>
+          <Motion.small className="text-white">
+            The world's first Africanfuturist social media site
+          </Motion.small>
           <TypeAnimation
             sequence={[
-              'Login or Sign up with JungleX',
+              'Login/signup to JungleX social media',
               2000,
-              'Unleash Your Tribe in the Jungle',
-              2000,
-              'Join the Savanna of Stories',
+              'Unleash your tribe',
               2000,
             ]}
             wrapper="p"
