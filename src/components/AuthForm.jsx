@@ -1,26 +1,17 @@
-// src/components/AuthForm.jsx
-import React, { useState, lazy, Suspense } from 'react';
-import { motion as Motion } from 'framer-motion'; // Changed to alias for consistency
-
-const AnimalAvatar = lazy(() => import('@components/AnimalAvatar'));
+import React, { useState } from 'react';
+import { motion as Motion } from 'framer-motion';
+import { Link } from 'react-router-dom'; // For navigation to sign-up
 
 const AuthForm = () => {
-  const [isSignUp, setIsSignUp] = useState(true);
   const [formData, setFormData] = useState({
     email: '',
     password: '',
-    username: '',
-    animal: 'Lion',
   });
   const [error, setError] = useState('');
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
-  };
-
-  const handleAnimalChange = (animal) => {
-    setFormData({ ...formData, animal });
   };
 
   const handleSubmit = (e) => {
@@ -35,16 +26,8 @@ const AuthForm = () => {
       setError('Password must be at least 8 characters long.');
       return;
     }
-    if (isSignUp && !formData.username.trim()) {
-      setError('Username is required for sign-up.');
-      return;
-    }
-    if (isSignUp && !formData.animal) {
-      setError('Please select an animal avatar.');
-      return;
-    }
 
-    console.log(`${isSignUp ? 'Sign Up' : 'Login'} submitted:`, formData);
+    console.log('Login submitted:', formData);
     // TODO: Integrate with free auth solution (e.g., Firebase free tier)
   };
 
@@ -64,30 +47,9 @@ const AuthForm = () => {
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2, duration: 0.5 }}
       >
-        {isSignUp ? 'Unleash Your Tribe' : 'Enter the Hunt'}
+        Login 
       </Motion.h2>
       <form onSubmit={handleSubmit} className="space-y-6">
-        {isSignUp && (
-          <div>
-            <label
-              className="block text-emerald-200 font-medium mb-1 text-sm font-ubuntu"
-              htmlFor="username"
-            >
-              Username
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleInputChange}
-              className="w-full px-4 py-3 bg-sand/20 border border-emerald-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:shadow-[0_0_8px_rgba(0,255,127,0.5)] transition-all duration-300 text-white text-sm"
-              placeholder="Choose your username"
-              aria-required="true"
-              autoComplete="username"
-            />
-          </div>
-        )}
         <div>
           <label
             className="block text-emerald-200 font-medium mb-1 text-sm font-ubuntu"
@@ -101,7 +63,7 @@ const AuthForm = () => {
             name="email"
             value={formData.email}
             onChange={handleInputChange}
-            className="w-full px-4 py-3 bg-sand/20 border border-emerald-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:shadow-[0_0_8px_rgba(0,255,127,0.5)] transition-all duration-300 text-white text-sm"
+            className="w-full px-4 py-2 bg-sand/20 border border-emerald-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:shadow-[0_0_8px_rgba(0,255,127,0.5)] transition-all duration-300 text-white text-sm"
             placeholder="Your email address"
             aria-required="true"
             autoComplete="email"
@@ -120,25 +82,12 @@ const AuthForm = () => {
             name="password"
             value={formData.password}
             onChange={handleInputChange}
-            className="w-full px-4 py-3 bg-sand/20 border border-emerald-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:shadow-[0_0_8px_rgba(0,255,127,0.5)] transition-all duration-300 text-white text-sm"
+            className="w-full px-4 py-2 bg-sand/20 border border-emerald-500 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:shadow-[0_0_8px_rgba(0,255,127,0.5)] transition-all duration-300 text-white text-sm"
             placeholder="Your password"
             aria-required="true"
-            autoComplete={isSignUp ? 'new-password' : 'current-password'}
+            autoComplete="current-password"
           />
         </div>
-        {isSignUp && (
-          <div>
-            <label className="block text-emerald-200 font-medium mb-2 text-sm font-ubuntu">
-              Choose Your Spirit Animal
-            </label>
-            <Suspense fallback={<div className="text-emerald-200 text-sm text-center">Summoning spirit animals...</div>}>
-              <AnimalAvatar
-                selectedAnimal={formData.animal}
-                setSelectedAnimal={handleAnimalChange}
-              />
-            </Suspense>
-          </div>
-        )}
         {error && (
           <p
             className="text-red-400 text-xs text-center font-ubuntu"
@@ -150,28 +99,94 @@ const AuthForm = () => {
         )}
         <Motion.button
           type="submit"
-          className="w-full py-3 bg-emerald-500 text-black font-bold font-semibold rounded-lg hover:bg-emerald-600 transition-all duration-300 shadow-md text-sm font-ubuntu"
+          className="w-full py-2 bg-emerald-500 text-black font-bold rounded-lg hover:bg-emerald-600 transition-all duration-300 shadow-md text-sm font-ubuntu"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
-          aria-label={isSignUp ? 'Sign up for JungleX' : 'Log in to JungleX'}
+          aria-label="Log in to JungleX"
         >
-          {isSignUp ? 'SIGN UP' : 'Enter the Hunt'}
+          Login
         </Motion.button>
       </form>
-      <p className="text-emerald-200 text-center mt-4 text-base font-ubuntu">
-        {isSignUp ? 'Already part of the tribe?' : 'Ready to join JungleX?'}
-        <Motion.button
-          onClick={() => setIsSignUp(!isSignUp)}
-          className="ml-2 text-emerald-300 hover:text-emerald-100 font-medium underline"
-          whileHover={{ scale: 1.05 }}
-          aria-label={isSignUp ? 'Switch to login' : 'Switch to sign up'}
+      <Motion.div
+        className="mt-4 text-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.4, duration: 0.5 }}
+      >
+        <Link
+          to="/signup"
+          className="inline-block px-6 bg-sand text-emerald-500 font-bold rounded-lg hover:bg-sand/80 transition-all duration-300 text-sm font-ubuntu"
+          aria-label="Create a new JungleX account"
         >
-          {isSignUp ? 'Login' : 'Sign Up'}
-        </Motion.button>
-      </p>
-      <small className="block text-center text-emerald-300/50 text-xs mt-4">
-        © {new Date().getFullYear()} Elodi Nigeria Enterprises. All rights reserved.
-      </small>
+          Create New Account
+        </Link>
+      </Motion.div>
+      <footer className="mt-8 pt-6 border-t border-emerald-500/30">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label
+              className="block text-emerald-200 font-medium mb-2 text-sm font-ubuntu"
+              htmlFor="language"
+            >
+              Language
+            </label>
+            <select
+              id="language"
+              disabled
+              className="w-full px-4 py-2 bg-sand/20 border border-emerald-500 rounded-lg text-emerald-200 text-sm font-ubuntu opacity-50 cursor-not-allowed"
+              aria-label="Language selection (coming soon)"
+            >
+              <option value="en">English (Coming Soon)</option>
+            </select>
+          </div>
+          <div>
+            <h3 className="text-emerald-200 font-medium mb-2 text-sm font-ubuntu">
+              Quick Links
+            </h3>
+            <ul className="space-y-2 text-sm font-ubuntu">
+              <li>
+                <a
+                  href="/about"
+                  className="text-emerald-300 hover:text-emerald-100 transition-colors"
+                  aria-label="Learn more about JungleX"
+                >
+                  About JungleX
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/privacy"
+                  className="text-emerald-300 hover:text-emerald-100 transition-colors"
+                  aria-label="JungleX Privacy Policy"
+                >
+                  Privacy Policy
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/terms"
+                  className="text-emerald-300 hover:text-emerald-100 transition-colors"
+                  aria-label="JungleX Terms of Service"
+                >
+                  Terms of Service
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/contact"
+                  className="text-emerald-300 hover:text-emerald-100 transition-colors"
+                  aria-label="Contact JungleX support"
+                >
+                  Contact Us
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <small className="block text-center text-emerald-300/50 text-xs mt-6 font-ubuntu">
+          © {new Date().getFullYear()} Elodi Nigeria Enterprises. All rights reserved.
+        </small>
+      </footer>
     </Motion.div>
   );
 };

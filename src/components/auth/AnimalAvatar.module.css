@@ -1,0 +1,166 @@
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-size: cover, cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay;
+  min-height: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: rgba(46, 125, 50, 0.8); /* Baobab Green with opacity */
+}
+
+.carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  width: 100%;
+  max-width: 300px;
+}
+
+.animalCard {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.animalButton {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  border: 4px solid var(--sahara-beige);
+  border-radius: 12px;
+  padding: 1rem;
+  background: rgba(245, 232, 199, 0.9); /* Sahara Beige */
+  transition: border-color 0.3s;
+}
+
+.animalButton.selected {
+  border-color: var(--savanna-ochre);
+  box-shadow: 0 0 10px rgba(212, 160, 23, 0.7); /* Savanna Ochre glow */
+  animation: pulse 1.5s infinite;
+}
+
+.imageWrapper {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.animalImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.animalName {
+  font-family: 'Ubuntu', sans-serif;
+  font-size: 1.25rem;
+  color: var(--sahara-beige);
+  font-weight: 500;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.animalButton.selected .animalName {
+  color: var(--savanna-ochre);
+  font-weight: 700;
+}
+
+.loreTooltip {
+  position: absolute;
+  top: -60px;
+  background: var(--baobab-green);
+  color: var(--sahara-beige);
+  text-align: center;
+  font-size: 0.875rem;
+  padding: 0.5rem;
+  border-radius: 4px;
+  width: 150px;
+  display: none;
+  z-index: 10;
+}
+
+.animalButton:hover .loreTooltip,
+.animalButton:focus .loreTooltip {
+  display: block;
+}
+
+.navButton {
+  background: var(--savanna-ochre);
+  color: var(--sahara-beige);
+  border: none;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.5rem;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.navButton:hover,
+.navButton:focus {
+  background: var(--ankh-red);
+  outline: none;
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 300px;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 4px solid var(--sahara-beige);
+  border-top: 4px solid var(--savanna-ochre);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 10px rgba(212, 160, 23, 0.7); }
+  50% { box-shadow: 0 0 20px rgba(212, 160, 23, 1); }
+  100% { box-shadow: 0 0 10px rgba(212, 160, 23, 0.7); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Responsive breakpoints */
+@media (max-width: 767px) {
+  .container {
+    padding: 1rem;
+  }
+
+  .carousel {
+    max-width: 250px;
+  }
+
+  .imageWrapper {
+    width: 100px;
+    height: 100px;
+  }
+
+  .animalName {
+    font-size: 1rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .carousel {
+    max-width: 280px;
+  }
+}
