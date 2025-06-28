@@ -17,7 +17,7 @@ const AuthPage = () => {
     >
       {/* Left Side: Title and TypeAnimation */}
       <Motion.div
-        className="relative z-10 w-full md:w-1/2 flex flex-col items-center justify-center min-h-[50vh] md:min-h-screen text-center md:text-left mb-12 md:mb-0"
+        className="relative z-10 w-full md:w-1/2 flex flex-col items-center justify-center min-h-[40vh] md:min-h-screen text-center md:text-left md:mb-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
