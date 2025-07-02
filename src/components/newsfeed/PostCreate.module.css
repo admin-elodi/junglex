@@ -1,0 +1,12 @@
+/* src/components/newsfeed/PostCreate.module.css */
+.label {
+  transition: all 0.3s ease;
+}
+
+.input {
+  transition: all 0.3s ease;
+}
+
+.input:focus {
+  box-shadow: 0 0 8px rgba(0, 255, 127, 0.5);
+}

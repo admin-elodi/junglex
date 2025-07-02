@@ -17,7 +17,7 @@ const AuthPage = () => {
     >
       {/* Left Side: Title and TypeAnimation */}
       <Motion.div
-        className="relative z-10 w-full md:w-1/2 rounded-lg max-w-md mx-auto flex flex-col items-center justify-center min-h-[50vh] md:h-[600px] text-center border-2 border-white mb-24 md:mb-0"
+        className="relative z-10 w-full md:w-1/2 rounded-xl max-w-md mx-auto flex flex-col items-center justify-between min-h-[auto] h-auto py-2 md:py-4 text-center border-2 border-white mb-12 md:mb-0"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.6 }}
@@ -25,12 +25,12 @@ const AuthPage = () => {
         <img
           src={sankofa}
           alt="Sankofa adinkra symbol"
-          className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4"
+          className="w-12 h-12 md:w-16 md:h-16 mx-auto mt-2"
           aria-hidden="true"
         />
         <div className="flex flex-col items-center">
           <Motion.h1
-            className="text-4xl md:text-5xl font-bold text-white mb-4 drop-shadow-lg font-ubuntu"
+            className="text-4xl md:text-5xl font-bold text-white my-4 drop-shadow-lg font-ubuntu"
             animate={{ scale: [1, 1.05, 1] }}
             transition={{ repeat: Infinity, duration: 2 }}
           >
@@ -48,17 +48,17 @@ const AuthPage = () => {
             sequence={[
               'Login/signup to JungleX social media',
               2000,
-              'Unleash your tribe',
+              'Unleash your tribe in the jungle',
               2000,
             ]}
             wrapper="p"
             repeat={Infinity}
-            className="text-lg md:text-xl text-emerald-300 drop-shadow-md font-ubuntu mt-4"
+            className="text-lg md:text-xl text-emerald-300 drop-shadow-md font-ubuntu mb-2"
           />
         </div>
       </Motion.div>
       {/* Right Side: Login Form */}
-      <div className="relative z-10 w-full md:w-1/2 max-w-md mx-auto flex justify-center md:justify-end items-center md:h-[600px]">
+      <div className="relative z-10 w-full md:w-1/2 max-w-md mx-auto flex justify-center md:justify-end items-center md:h-auto">
         <AuthForm />
       </div>
     </div>

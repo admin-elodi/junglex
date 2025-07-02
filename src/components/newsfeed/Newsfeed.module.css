@@ -1,0 +1,9 @@
+/* src/components/newsfeed/Newsfeed.module.css */
+.post {
+  transition: all 0.3s ease;
+}
+
+.post:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}

@@ -1,107 +1,33 @@
-.carousel {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem;
-  max-width: 100%;
-  margin: 0 auto;
-}
-
-.animalContainer {
-  flex: 1;
-  max-width: 300px;
-  text-align: center;
-}
-
-.animalCard {
-  background: rgba(229, 231, 235, 0.1);
-  border: 1px solid var(--baobab-green);
-  border-radius: 1rem;
-  padding: 1rem;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-.animalImage {
+/* src/components/auth/AnimalAvatar.module.css */
+.carouselContainer {
   width: 100%;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 0.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.animalName {
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: var(--savanna-ochre);
-  margin-bottom: 0.5rem;
-}
-
-.lore {
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 0.875rem;
-  color: var(--sahara-beige);
-  margin-bottom: 1rem;
-}
-
-.selectButton {
-  background: var(--sand);
-  color: var(--baobab-green);
-  font-family: 'Ubuntu', sans-serif;
-  font-size: 0.875rem;
-  font-weight: bold;
-  padding: 0.5rem 1rem;
-  border-radius: 0.5rem;
-  border: none;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.selectButton:hover {
-  background: var(--sahara-beige);
-}
-
-.selected {
-  background: var(--baobab-green);
-  color: var(--sand);
-}
-
-.arrow {
-  background: none;
-  border: none;
-  font-size: 1.5rem;
-  color: var(--savanna-ochre);
-  cursor: pointer;
+  max-width: 300px;
+  height: 200px; /* Fixed height for carousel */
+  overflow-x: auto;
+  overflow-y: hidden;
   padding: 0.5rem;
 }
 
-.arrow:hover {
-  color: var(--sahara-beige);
+.carousel {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-start;
 }
 
-@media (max-width: 767px) {
-  .carousel {
-    gap: 0.5rem;
-  }
+.animalItem {
+  flex: 0 0 auto;
+  cursor: pointer;
+  text-align: center;
+}
 
-  .animalImage {
-    height: 120px;
-  }
+.animalImage {
+  width: 64px; /* Fixed size for uniformity */
+  height: 64px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 2px solid transparent;
+}
 
-  .animalName {
-    font-size: 1rem;
-  }
-
-  .lore {
-    font-size: 0.75rem;
-  }
-
-  .selectButton {
-    font-size: 0.75rem;
-    padding: 0.4rem 0.8rem;
-  }
-
-  .arrow {
-    font-size: 1.25rem;
-  }
+.selected .animalImage {
+  border-color: #2E7D32; /* Baobab Green */
 }

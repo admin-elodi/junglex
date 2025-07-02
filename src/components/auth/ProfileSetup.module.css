@@ -1,0 +1,8 @@
+/* src/components/auth/ProfileSetup.module.css */
+textarea, input {
+  transition: all 0.3s ease;
+}
+
+textarea:focus, input:focus {
+  box-shadow: 0 0 8px rgba(0, 255, 127, 0.5);
+}
