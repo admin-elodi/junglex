@@ -241,15 +241,6 @@ const SignUp = () => {
                   {error}
                 </p>
               )}
-              <Motion.button
-                type="submit"
-                className="w-full py-2 bg-emerald-500 text-black font-bold rounded-lg hover:bg-emerald-600 transition-all duration-300 text-sm font-ubuntu"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                aria-label="Sign up for JungleX"
-              >
-                Join the Tribe
-              </Motion.button>
             </div>
             <div className={styles.avatarGroup}>
               <label className="block text-emerald-200 font-medium mb-2 text-sm font-ubuntu text-center">
@@ -258,10 +249,19 @@ const SignUp = () => {
               <AnimalAvatar onSelect={handleAnimalSelect} selectedAnimal={formData.spiritAnimal} />
             </div>
           </div>
-          <div className="mt-4 text-center">
+          <div className={styles.submitGroup}>
+            <Motion.button
+              type="submit"
+              className="w-full py-2 bg-emerald-500 text-black font-bold rounded-lg hover:bg-emerald-600 transition-all duration-300 text-sm font-ubuntu"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              aria-label="Sign up for JungleX"
+            >
+              Join the Tribe
+            </Motion.button>
             <Link
               to="/"
-              className="text-emerald-300 hover:text-emerald-100 text-sm font-ubuntu"
+              className="text-emerald-300 hover:text-emerald-100 text-sm font-ubuntu mt-4 inline-block"
               aria-label="Back to login"
             >
               Already have an account? Log in
