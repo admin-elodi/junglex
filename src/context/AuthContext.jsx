@@ -1,61 +1,81 @@
 // src/context/AuthContext.jsx
-import React, { createContext, useState, useEffect } from 'react';
-import { signUpUser } from '@/services/api/auth';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+import { supabase } from '@/lib/supabaseClient';
 
-const AuthContext = createContext();
+export const AuthContext = createContext();
 
-const AuthProvider = ({ children }) => {
-  const [accounts, setAccounts] = useState(() => {
-    const saved = localStorage.getItem('junglex_accounts');
-    return saved ? JSON.parse(saved) : [];
-  });
-  const [currentAccount, setCurrentAccount] = useState(null);
+export const AuthProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
   const [signUpSuccess, setSignUpSuccess] = useState(false);
 
-  useEffect(() => {
-    localStorage.setItem('junglex_accounts', JSON.stringify(accounts));
-  }, [accounts]);
+  // ✅ Standardized naming: signUp
+  const signUp = async ({ email, password, username, spiritAnimal }) => {
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          username,
+          spirit_animal: spiritAnimal,
+        },
+      },
+    });
 
-  const login = async (email) => {
-    // Password parameter to be added for Firebase integration
-    const newAccount = { email, token: `mock-token-${email}` };
-    setCurrentAccount(newAccount);
-    if (!accounts.some((acc) => acc.email === email)) {
-      setAccounts([...accounts, newAccount]);
-    }
-  };
+    if (error) throw error;
 
-  const addAccount = async (email) => {
-    // Password used in future Firebase integration
-    const newAccount = { email, token: `mock-token-${email}` };
-    setAccounts([...accounts, newAccount]);
-    setCurrentAccount(newAccount);
-  };
-
-  const signUp = async ({ username, email, password, spiritAnimal }) => {
-    const response = await signUpUser({ username, email, password, spiritAnimal });
-    const newAccount = { email, token: response.token || `mock-token-${email}`, username, spiritAnimal };
-    setAccounts([...accounts, newAccount]);
-    setCurrentAccount(newAccount);
     setSignUpSuccess(true);
+    return data;
   };
 
-  const updateProfile = async ({ email, bio, culturalTags, bannerPattern, badgeColor }) => {
-    const updatedAccount = { ...currentAccount, bio, culturalTags, bannerPattern, badgeColor };
-    setAccounts(accounts.map((acc) => (acc.email === email ? updatedAccount : acc)));
-    setCurrentAccount(updatedAccount);
+  const signIn = async ({ email, password }) => {
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) throw error;
+
+    setUser(data.user);
+    return data;
   };
 
-  const switchAccount = (email) => {
-    const account = accounts.find((acc) => acc.email === email);
-    setCurrentAccount(account);
+  const logout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
   };
+
+  useEffect(() => {
+    const getSession = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      if (error) {
+        console.error('❌ Session error:', error.message);
+        return;
+      }
+      setUser(data.session?.user || null);
+    };
+
+    getSession();
+
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => {
+      listener?.subscription?.unsubscribe();
+    };
+  }, []);
 
   return (
-    <AuthContext.Provider value={{ accounts, currentAccount, login, addAccount, signUp, updateProfile, switchAccount, signUpSuccess }}>
+    <AuthContext.Provider
+      value={{
+        user,
+        signUp,
+        signUpSuccess,
+        setSignUpSuccess,
+        signIn,
+        logout,
+      }}
+    >
       {children}
     </AuthContext.Provider>
   );
 };
 
-export { AuthContext, AuthProvider };
+export const useAuth = () => useContext(AuthContext);
