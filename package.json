@@ -12,10 +12,12 @@
     "tailwind:dev": "npx @tailwindcss/cli -i ./src/index.css -o ./dist/output.css --watch"
   },
   "dependencies": {
+    "@headlessui/react": "^2.2.4",
     "@supabase/supabase-js": "^2.50.3",
     "@tailwindcss/vite": "^4.1.7",
     "framer-motion": "^12.15.0",
     "react": "^19.1.0",
+    "react-confetti": "^6.4.0",
     "react-dom": "^19.1.0",
     "react-lazy-load-image-component": "^1.6.3",
     "react-router-dom": "^7.6.1",

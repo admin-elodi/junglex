@@ -1,5 +1,5 @@
 // src/pages/SignUp.jsx
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { motion as Motion } from 'framer-motion';
 import { TypeAnimation } from 'react-type-animation';
 import { useNavigate, Link } from 'react-router-dom';
@@ -25,6 +25,8 @@ const animalImages = {
 const SignUp = () => {
   const { signUp, setSignUpSuccess } = useAuth();
   const navigate = useNavigate();
+  const animalSectionRef = useRef(null);
+
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -32,6 +34,7 @@ const SignUp = () => {
     confirmPassword: '',
     spiritAnimal: '',
   });
+
   const [error, setError] = useState('');
   const [successAnimal, setSuccessAnimal] = useState('');
   const [language, setLanguage] = useState('en');
@@ -63,7 +66,11 @@ const SignUp = () => {
     if (!email.includes('@') || !email.includes('.')) return setError('Enter a valid email.');
     if (password.length < 8) return setError('Password must be at least 8 characters.');
     if (password !== confirmPassword) return setError('Passwords do not match.');
-    if (!spiritAnimal) return setError('Select a spirit animal.');
+    if (!spiritAnimal) {
+      setError('Select a spirit animal.');
+      animalSectionRef.current?.scrollIntoView({ behavior: 'smooth' });
+      return;
+    }
 
     try {
       await signUp({ email, password, username, spiritAnimal });
@@ -80,6 +87,7 @@ const SignUp = () => {
         backgroundImage: `linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(${sunset})`,
       }}
     >
+      {/* Success Modal */}
       {successAnimal && (
         <Motion.div
           className="fixed inset-0 flex items-center justify-center bg-black/80 backdrop-blur-md z-50"
@@ -99,7 +107,7 @@ const SignUp = () => {
             <p className="text-sahara-beige">Your roar is ready to echo!</p>
             <Motion.button
               onClick={() => {
-                setSignUpSuccess(true); // Trigger success state for redirect
+                setSignUpSuccess(true);
                 navigate('/email-verification');
               }}
               className="mt-4 py-2 px-6 bg-emerald-500 text-black font-bold rounded-lg"
@@ -112,7 +120,7 @@ const SignUp = () => {
         </Motion.div>
       )}
 
-      {/* Form Header */}
+      {/* Header */}
       <Motion.div
         className="relative z-10 w-full max-w-4xl text-center"
         initial={{ opacity: 0 }}
@@ -151,6 +159,7 @@ const SignUp = () => {
         >
           <h2 className="text-2xl font-bold text-emerald-300 text-center font-ubuntu">Sign Up</h2>
           <div className={styles.formContainer}>
+            {/* Input Fields */}
             <div className={`${styles.inputGroup} text-left`}>
               {['username', 'email', 'password', 'confirmPassword'].map((field) => (
                 <div key={field}>
@@ -178,11 +187,19 @@ const SignUp = () => {
             </div>
 
             {/* Spirit Animal */}
-            <div className={styles.avatarGroup}>
-              <label className="block text-emerald-200 text-sm font-ubuntu text-center">
+            <div className="mt-6" ref={animalSectionRef}>
+              <h3 className="text-lg text-center font-bold text-emerald-300 mb-2 font-ubuntu">
                 Choose Your Spirit Animal
-              </label>
-              <AnimalAvatar onSelect={handleAnimalSelect} selectedAnimal={formData.spiritAnimal} />
+              </h3>
+              <AnimalAvatar
+                onSelect={handleAnimalSelect}
+                selectedAnimal={formData.spiritAnimal}
+              />
+              {!formData.spiritAnimal && error?.toLowerCase().includes('animal') && (
+                <p className="text-center text-red-400 text-xs mt-2">
+                  You must select one to proceed.
+                </p>
+              )}
             </div>
           </div>
 
@@ -199,6 +216,7 @@ const SignUp = () => {
           </div>
         </Motion.form>
 
+        {/* Footer CTA */}
         <Motion.div
           className="text-center mt-4"
           initial={{ opacity: 0 }}
